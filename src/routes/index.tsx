@@ -6,6 +6,12 @@ import stick5A from "@/assets/stick-5a.jpg";
 import stick5B from "@/assets/stick-5b.jpg";
 import stick7A from "@/assets/stick-7a.jpg";
 import stick2B from "@/assets/stick-2b.jpg";
+import teamDaniel from "@/assets/team-daniel.jpg";
+import teamSani from "@/assets/team-sani.jpg";
+import teamGideon from "@/assets/team-gideon.jpg";
+import teamDorcas from "@/assets/team-dorcas.jpg";
+import teamPeace from "@/assets/team-peace.jpg";
+import teamAntonia from "@/assets/team-antonia.jpg";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -444,12 +450,12 @@ function Why() {
 /* ─────────────────────────── LEADERSHIP ─────────────────────────── */
 
 const TEAM = [
-  { name: "Daniel Palama", role: "Founder & CEO", bio: "Professional drummer, entrepreneur, and visionary behind Zenbeatz. Daniel's passion for percussion and African excellence drove him to build Nigeria's first world-class drumstick brand.", tags: ["Lagos, Nigeria", "Houston, Texas", "Professional Drummer"], initials: "DP" },
-  { name: "Sani Sule", role: "Marketing Director", bio: "A results-driven marketing leader committed to amplifying the Zenbeatz brand globally through strategic partnerships and bold storytelling.", tags: ["Brand Strategy", "Global Outreach", "Wholesale Growth"], initials: "SS" },
-  { name: "Gideon Monday Simon", role: "Chief Engineer", bio: "The technical mastermind behind every Zenbeatz drumstick. Gideon leads the engineering and manufacturing process to world-class standards.", tags: ["Manufacturing", "Quality Control", "Precision Engineering"], initials: "GS" },
-  { name: "Dorcas Adekunle", role: "HR / Secretary", bio: "The organizational backbone of Zenbeatz, Dorcas ensures seamless operations and a people-first culture across the team.", tags: ["People & Culture", "Operations", "Team Coordination"], initials: "DA" },
-  { name: "Peace Palama", role: "Chief Accountant", bio: "The financial guardian of the Zenbeatz vision. Peace oversees the company's financial health as the brand grows globally.", tags: ["Finance", "Accounting", "Fiscal Strategy"], initials: "PP" },
-  { name: "Antonia", role: "Chief Legal", bio: "The legal compass of Zenbeatz — safeguarding the company's interests across contracts, intellectual property, and compliance.", tags: ["Legal Affairs", "Compliance", "Contracts"], initials: "AN" },
+  { name: "Daniel Palama", role: "Founder & CEO", bio: "Professional drummer, entrepreneur, and visionary behind Zenbeatz. Daniel's passion for percussion and African excellence drove him to build Nigeria's first world-class drumstick brand.", tags: ["Lagos, Nigeria", "Houston, Texas", "Professional Drummer"], initials: "DP", photo: teamDaniel },
+  { name: "Sani Sule", role: "Marketing Director", bio: "A results-driven marketing leader committed to amplifying the Zenbeatz brand globally through strategic partnerships and bold storytelling.", tags: ["Brand Strategy", "Global Outreach", "Wholesale Growth"], initials: "SS", photo: teamSani },
+  { name: "Gideon Monday Simon", role: "Chief Engineer", bio: "The technical mastermind behind every Zenbeatz drumstick. Gideon leads the engineering and manufacturing process to world-class standards.", tags: ["Manufacturing", "Quality Control", "Precision Engineering"], initials: "GS", photo: teamGideon },
+  { name: "Dorcas Adekunle", role: "HR / Secretary", bio: "The organizational backbone of Zenbeatz, Dorcas ensures seamless operations and a people-first culture across the team.", tags: ["People & Culture", "Operations", "Team Coordination"], initials: "DA", photo: teamDorcas },
+  { name: "Peace Palama", role: "Chief Accountant", bio: "The financial guardian of the Zenbeatz vision. Peace oversees the company's financial health as the brand grows globally.", tags: ["Finance", "Accounting", "Fiscal Strategy"], initials: "PP", photo: teamPeace },
+  { name: "Antonia", role: "Chief Legal", bio: "The legal compass of Zenbeatz — safeguarding the company's interests across contracts, intellectual property, and compliance.", tags: ["Legal Affairs", "Compliance", "Contracts"], initials: "AN", photo: teamAntonia },
 ];
 
 function Leadership() {
@@ -469,11 +475,14 @@ function Leadership() {
               key={m.name}
               className="group rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent overflow-hidden hover:border-gold/40 transition-all"
             >
-              <div className="aspect-[4/3] bg-gradient-to-br from-forest-accent/40 to-forest-deep flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,oklch(0.74_0.17_60/0.18),transparent_70%)]" />
-                <span className="relative text-6xl font-black text-white/90 tracking-widest">
-                  {m.initials}
-                </span>
+              <div className="aspect-[4/3] relative overflow-hidden bg-forest-deep">
+                <img
+                  src={m.photo}
+                  alt={m.name}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/80 via-transparent to-transparent" />
               </div>
               <div className="p-7">
                 <p className="text-gold text-xs tracking-[0.3em] font-semibold uppercase">{m.role}</p>
