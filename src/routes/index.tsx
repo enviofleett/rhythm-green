@@ -538,8 +538,8 @@ function Contact() {
           <div className="lg:col-span-2 space-y-6">
             {[
               { t: "Offices", lines: ["Lagos, Nigeria (Manufacturing)", "Houston, Texas (Sales)"] },
-              { t: "Email", lines: ["wholesale@zenbeatz.com"] },
-              { t: "Phone", lines: ["+1 (832) XXX-XXXX (US)", "+234 XXX XXX XXXX (Nigeria)"] },
+              { t: "Email", lines: ["order@zenbeatz.org"] },
+              { t: "Phone", lines: ["+234 906 377 0004"] },
             ].map((b) => (
               <div key={b.t} className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
                 <h4 className="text-gold text-xs tracking-[0.3em] font-bold uppercase">{b.t}</h4>
