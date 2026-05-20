@@ -74,11 +74,11 @@ function Hero() {
         alt="Zenbeatz premium drumsticks"
         width={1920}
         height={1280}
-        className="absolute inset-0 w-full h-full object-cover opacity-60"
+        className="absolute inset-0 w-full h-full object-cover opacity-90"
       />
-      {/* Layered overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-forest-deep/95 via-forest-deep/70 to-forest-deep" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,var(--forest-deep)_85%)]" />
+      {/* Layered overlays — lighter so the sticks remain visible */}
+      <div className="absolute inset-0 bg-gradient-to-b from-forest-deep/60 via-forest-deep/40 to-forest-deep/90" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,var(--forest-deep)_95%)]" />
       {/* Glow */}
       <div className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-gold/10 blur-[120px]" />
 
