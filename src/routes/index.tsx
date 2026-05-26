@@ -203,9 +203,9 @@ function About() {
             <div className="absolute inset-0 bg-gradient-to-t from-forest-deep via-transparent to-transparent" />
           </div>
           <div className="absolute -bottom-6 -left-6 bg-forest-deep border border-gold/40 rounded-lg px-6 py-4 shadow-gold backdrop-blur-md">
-            <p className="text-3xl">🇳🇬</p>
+            <p className="text-3xl">🇺🇸</p>
             <p className="text-white/60 text-xs tracking-widest uppercase mt-1">Made in</p>
-            <p className="text-white font-bold text-lg">Nigeria</p>
+            <p className="text-white font-bold text-lg">USA</p>
           </div>
         </div>
       </div>
