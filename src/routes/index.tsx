@@ -191,16 +191,14 @@ function About() {
         </div>
 
         <div className="relative">
-          <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-gold">
-            <img
-              src={drummerImage}
-              alt="Drummer performing"
-              width={1200}
-              height={1500}
-              loading="lazy"
-              className="w-full h-[640px] object-cover"
+          <div className="relative rounded-xl overflow-hidden border border-white/10 shadow-gold aspect-[3/4]">
+            <iframe
+              src="https://www.youtube.com/embed/q9AHROKqgyo"
+              title="Zenbeatz video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="w-full h-full"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-forest-deep via-transparent to-transparent" />
           </div>
           <div className="absolute -bottom-6 -left-6 bg-forest-deep border border-gold/40 rounded-lg px-6 py-4 shadow-gold backdrop-blur-md">
             <p className="text-3xl">🇺🇸</p>
