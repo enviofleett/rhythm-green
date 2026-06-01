@@ -68,7 +68,10 @@ function Nav() {
 
 function Hero() {
   return (
-    <section id="top" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="top"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
       <img
         src={heroImage}
         alt="Zenbeatz premium drumsticks"
@@ -102,8 +105,8 @@ function Hero() {
         </div>
 
         <p className="mt-8 mx-auto max-w-2xl text-white/60 text-base sm:text-lg leading-relaxed">
-          World-class drumsticks manufactured with premium Igala hardwood.
-          Wholesale &amp; distribution partnerships available worldwide.
+          World-class drumsticks manufactured with premium Igala hardwood. Wholesale &amp;
+          distribution partnerships available worldwide.
         </p>
 
         <div className="mt-12 flex flex-wrap justify-center gap-4">
@@ -128,7 +131,14 @@ function Hero() {
         aria-label="Scroll to about"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 hover:text-gold transition animate-[pulse_2.4s_ease-in-out_infinite]"
       >
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
           <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </a>
@@ -155,24 +165,25 @@ function About() {
         <div>
           <Eyebrow>Our Story</Eyebrow>
           <h2 className="text-white text-4xl md:text-6xl font-black tracking-tight leading-[1.05]">
-            A Vision That<br />Took Rhythm
+            A Vision That
+            <br />
+            Took Rhythm
           </h2>
           <div className="mt-8 space-y-5 text-white/65 text-base md:text-lg leading-relaxed font-light">
             <p>
-              In 2023, Zenbeatz was founded in Lagos, Nigeria, with a main office in
-              Houston, Texas, with one bold mission: to become the leading
-              drumstick manufacturer in Africa and place Nigeria on the global
-              percussion map.
+              In 2023, Zenbeatz was founded in Lagos, Nigeria, with a main office in Houston, Texas,
+              with one bold mission: to become the leading drumstick manufacturer in Africa and
+              place Nigeria on the global percussion map.
             </p>
             <p>
-              For years, Africa has imported its drumsticks from overseas. As a
-              professional drummer, I experienced this firsthand. I always dreamed of
-              expanding my craft beyond performance — into creation.
+              For years, Africa has imported its drumsticks from overseas. As a professional
+              drummer, I experienced this firsthand. I always dreamed of expanding my craft beyond
+              performance — into creation.
             </p>
             <blockquote className="border-l-2 border-gold pl-5 text-white/90 italic">
-              "So I decided to change the narrative. Zenbeatz was born to manufacture
-              world-class drumsticks right here in Nigeria — drumsticks that echo our
-              name across stages, studios, churches, and arenas around the world."
+              "So I decided to change the narrative. Zenbeatz was born to manufacture world-class
+              drumsticks right here in Nigeria — drumsticks that echo our name across stages,
+              studios, churches, and arenas around the world."
             </blockquote>
           </div>
 
@@ -244,10 +255,10 @@ function Material() {
             The Power of <span className="text-gold">Igala Wood</span>
           </h2>
           <p className="mt-8 text-white/65 text-lg leading-relaxed font-light">
-            At the heart of every Zenbeatz drumstick lies rare, premium Igala hardwood —
-            carefully selected for exceptional performance. Igala wood gives our sticks
-            strength without sacrificing feel. The result? A drumstick that sits
-            perfectly in your hand and responds with precision every time you strike.
+            At the heart of every Zenbeatz drumstick lies rare, premium Igala hardwood — carefully
+            selected for exceptional performance. Igala wood gives our sticks strength without
+            sacrificing feel. The result? A drumstick that sits perfectly in your hand and responds
+            with precision every time you strike.
           </p>
 
           <ul className="mt-8 space-y-3">
@@ -266,9 +277,9 @@ function Material() {
           </ul>
 
           <div className="mt-10 rounded-lg border border-gold/20 bg-gold/5 p-5 text-white/70 text-sm">
-            <span className="text-gold font-bold">Quality Assurance:</span> Each pair is
-            engineered to meet American production standards, ensuring consistent weight,
-            balance, and finish across every batch.
+            <span className="text-gold font-bold">Quality Assurance:</span> Each pair is engineered
+            to meet American production standards, ensuring consistent weight, balance, and finish
+            across every batch.
           </div>
         </div>
       </div>
@@ -320,8 +331,8 @@ function Products() {
             Built for <span className="text-gold">Every Drummer</span>
           </h2>
           <p className="mt-6 text-white/65 text-lg font-light leading-relaxed">
-            Whether you're leading worship, recording in the studio, performing on stage,
-            or teaching the next generation — Zenbeatz is built for you.
+            Whether you're leading worship, recording in the studio, performing on stage, or
+            teaching the next generation — Zenbeatz is built for you.
           </p>
         </div>
 
@@ -380,8 +391,8 @@ function Products() {
         <div className="mt-14 text-center rounded-xl border border-dashed border-gold/30 bg-gold/5 p-8">
           <p className="text-gold text-xs tracking-[0.3em] font-bold uppercase">Coming Soon</p>
           <p className="text-white/70 mt-3 max-w-2xl mx-auto">
-            Our long-term vision includes expanding into manufacturing Zenbeatz drum sets,
-            building a complete African percussion brand recognized worldwide.
+            Our long-term vision includes expanding into manufacturing Zenbeatz drum sets, building
+            a complete African percussion brand recognized worldwide.
           </p>
         </div>
       </div>
@@ -392,12 +403,36 @@ function Products() {
 /* ─────────────────────────── WHY US ─────────────────────────── */
 
 const WHY = [
-  { icon: "🌳", t: "Premium Igala Hardwood", d: "Rare, sustainably sourced wood with exceptional durability and natural balance." },
-  { icon: "✓", t: "American Standard QC", d: "Every pair meets rigorous international quality control standards." },
-  { icon: "⚖", t: "Precision-Balanced", d: "Computer-matched pairs ensure perfect weight distribution." },
-  { icon: "🔥", t: "Performance-Tested", d: "Rigorously tested for durability under professional playing conditions." },
-  { icon: "🇳🇬", t: "Made in Nigeria", d: "Proudly manufactured in Lagos, supporting African excellence." },
-  { icon: "🥁", t: "By Drummers, For Drummers", d: "Designed by professional percussionists who understand your needs." },
+  {
+    icon: "🌳",
+    t: "Premium Igala Hardwood",
+    d: "Rare, sustainably sourced wood with exceptional durability and natural balance.",
+  },
+  {
+    icon: "✓",
+    t: "American Standard QC",
+    d: "Every pair meets rigorous international quality control standards.",
+  },
+  {
+    icon: "⚖",
+    t: "Precision-Balanced",
+    d: "Computer-matched pairs ensure perfect weight distribution.",
+  },
+  {
+    icon: "🔥",
+    t: "Performance-Tested",
+    d: "Rigorously tested for durability under professional playing conditions.",
+  },
+  {
+    icon: "🇳🇬",
+    t: "Made in Nigeria",
+    d: "Proudly manufactured in Lagos, supporting African excellence.",
+  },
+  {
+    icon: "🥁",
+    t: "By Drummers, For Drummers",
+    d: "Designed by professional percussionists who understand your needs.",
+  },
 ];
 
 function Why() {
@@ -411,8 +446,8 @@ function Why() {
             Why Choose <span className="text-gold">Zenbeatz?</span>
           </h2>
           <p className="mt-6 text-white/65 text-lg font-light leading-relaxed">
-            We're not just selling drumsticks. We're building partnerships that bring
-            African excellence to the global stage.
+            We're not just selling drumsticks. We're building partnerships that bring African
+            excellence to the global stage.
           </p>
         </div>
 
@@ -433,8 +468,8 @@ function Why() {
 
         <blockquote className="mt-20 max-w-4xl mx-auto text-center">
           <p className="text-white text-2xl md:text-4xl font-light italic leading-relaxed">
-            "Zenbeatz is proof that Nigeria can manufacture at a global level. It is
-            proof that Africa can compete. It is proof that rhythm has no borders."
+            "Zenbeatz is proof that Nigeria can manufacture at a global level. It is proof that
+            Africa can compete. It is proof that rhythm has no borders."
           </p>
           <footer className="mt-6 text-gold text-sm tracking-[0.3em] font-bold uppercase">
             — The Zenbeatz Vision
@@ -448,12 +483,54 @@ function Why() {
 /* ─────────────────────────── LEADERSHIP ─────────────────────────── */
 
 const TEAM = [
-  { name: "Daniel Palama", role: "Founder & CEO", bio: "Professional drummer, entrepreneur, and visionary behind Zenbeatz. Daniel's passion for percussion and African excellence drove him to build Nigeria's first world-class drumstick brand.", tags: ["Lagos, Nigeria", "Houston, Texas", "Professional Drummer"], initials: "DP", photo: teamDaniel },
-  { name: "Sani Sule", role: "Marketing Director", bio: "A results-driven marketing leader committed to amplifying the Zenbeatz brand globally through strategic partnerships and bold storytelling.", tags: ["Brand Strategy", "Global Outreach", "Wholesale Growth"], initials: "SS", photo: teamSani },
-  { name: "Gideon Monday Simon", role: "Chief Engineer", bio: "The technical mastermind behind every Zenbeatz drumstick. Gideon leads the engineering and manufacturing process to world-class standards.", tags: ["Manufacturing", "Quality Control", "Precision Engineering"], initials: "GS", photo: teamGideon },
-  { name: "Dorcas Adekunle", role: "HR / Secretary", bio: "The organizational backbone of Zenbeatz, Dorcas ensures seamless operations and a people-first culture across the team.", tags: ["People & Culture", "Operations", "Team Coordination"], initials: "DA", photo: teamDorcas },
-  { name: "Peace Palama", role: "Chief Accountant", bio: "The financial guardian of the Zenbeatz vision. Peace oversees the company's financial health as the brand grows globally.", tags: ["Finance", "Accounting", "Fiscal Strategy"], initials: "PP", photo: teamPeace },
-  { name: "Antonia", role: "Chief Legal", bio: "The legal compass of Zenbeatz — safeguarding the company's interests across contracts, intellectual property, and compliance.", tags: ["Legal Affairs", "Compliance", "Contracts"], initials: "AN", photo: teamAntonia },
+  {
+    name: "Daniel Palama",
+    role: "Founder & CEO",
+    bio: "Professional drummer, entrepreneur, and visionary behind Zenbeatz. Daniel's passion for percussion and African excellence drove him to build Nigeria's first world-class drumstick brand.",
+    tags: ["Lagos, Nigeria", "Houston, Texas", "Professional Drummer"],
+    initials: "DP",
+    photo: teamDaniel,
+  },
+  {
+    name: "Sani Sule",
+    role: "Marketing Director",
+    bio: "A results-driven marketing leader committed to amplifying the Zenbeatz brand globally through strategic partnerships and bold storytelling.",
+    tags: ["Brand Strategy", "Global Outreach", "Wholesale Growth"],
+    initials: "SS",
+    photo: teamSani,
+  },
+  {
+    name: "Gideon Monday Simon",
+    role: "Chief Engineer",
+    bio: "The technical mastermind behind every Zenbeatz drumstick. Gideon leads the engineering and manufacturing process to world-class standards.",
+    tags: ["Manufacturing", "Quality Control", "Precision Engineering"],
+    initials: "GS",
+    photo: teamGideon,
+  },
+  {
+    name: "Dorcas Adekunle",
+    role: "HR / Secretary",
+    bio: "The organizational backbone of Zenbeatz, Dorcas ensures seamless operations and a people-first culture across the team.",
+    tags: ["People & Culture", "Operations", "Team Coordination"],
+    initials: "DA",
+    photo: teamDorcas,
+  },
+  {
+    name: "Peace Palama",
+    role: "Chief Accountant",
+    bio: "The financial guardian of the Zenbeatz vision. Peace oversees the company's financial health as the brand grows globally.",
+    tags: ["Finance", "Accounting", "Fiscal Strategy"],
+    initials: "PP",
+    photo: teamPeace,
+  },
+  {
+    name: "Antonia",
+    role: "Chief Legal",
+    bio: "The legal compass of Zenbeatz — safeguarding the company's interests across contracts, intellectual property, and compliance.",
+    tags: ["Legal Affairs", "Compliance", "Contracts"],
+    initials: "AN",
+    photo: teamAntonia,
+  },
 ];
 
 function Leadership() {
@@ -483,12 +560,17 @@ function Leadership() {
                 <div className="absolute inset-0 bg-gradient-to-t from-forest-deep/80 via-transparent to-transparent" />
               </div>
               <div className="p-7">
-                <p className="text-gold text-xs tracking-[0.3em] font-semibold uppercase">{m.role}</p>
+                <p className="text-gold text-xs tracking-[0.3em] font-semibold uppercase">
+                  {m.role}
+                </p>
                 <h3 className="mt-2 text-white text-2xl font-bold">{m.name}</h3>
                 <p className="mt-3 text-white/60 text-sm leading-relaxed">{m.bio}</p>
                 <div className="mt-5 flex flex-wrap gap-2">
                   {m.tags.map((t) => (
-                    <span key={t} className="text-[11px] px-3 py-1 rounded-full border border-white/15 text-white/65">
+                    <span
+                      key={t}
+                      className="text-[11px] px-3 py-1 rounded-full border border-white/15 text-white/65"
+                    >
                       {t}
                     </span>
                   ))}
@@ -500,8 +582,8 @@ function Leadership() {
 
         <blockquote className="mt-20 max-w-4xl mx-auto text-center">
           <p className="text-white text-2xl md:text-4xl font-light italic leading-relaxed">
-            "When you play Zenbeatz, you're not just playing a drumstick. You're
-            playing a movement."
+            "When you play Zenbeatz, you're not just playing a drumstick. You're playing a
+            movement."
           </p>
           <footer className="mt-6 text-gold text-sm tracking-[0.3em] font-bold uppercase">
             — Daniel Palama, Founder
@@ -526,8 +608,8 @@ function Contact() {
             Become a <span className="text-gold">Zenbeatz Distributor</span>
           </h2>
           <p className="mt-6 text-white/65 text-lg font-light leading-relaxed">
-            Join us in bringing African excellence to drummers worldwide. We offer
-            competitive wholesale pricing, reliable supply, and dedicated partner support.
+            Join us in bringing African excellence to drummers worldwide. We offer competitive
+            wholesale pricing, reliable supply, and dedicated partner support.
           </p>
         </div>
 
@@ -542,13 +624,18 @@ function Contact() {
               <div key={b.t} className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
                 <h4 className="text-gold text-xs tracking-[0.3em] font-bold uppercase">{b.t}</h4>
                 <div className="mt-3 space-y-1 text-white/80">
-                  {b.lines.map((l) => <p key={l}>{l}</p>)}
+                  {b.lines.map((l) => (
+                    <p key={l}>{l}</p>
+                  ))}
                 </div>
               </div>
             ))}
             <div className="flex flex-wrap gap-2">
               {["🇳🇬 Made in Nigeria", "🇺🇸 US Office", "🌍 Global Shipping"].map((t) => (
-                <span key={t} className="text-xs px-3 py-2 rounded-full border border-gold/30 bg-gold/5 text-white/80">
+                <span
+                  key={t}
+                  className="text-xs px-3 py-2 rounded-full border border-gold/30 bg-gold/5 text-white/80"
+                >
                   {t}
                 </span>
               ))}
@@ -568,7 +655,9 @@ function Contact() {
               <Field label="Phone" placeholder="+1 ..." />
               <Field label="Country *" placeholder="Country" />
               <div>
-                <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">Business Type *</label>
+                <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">
+                  Business Type *
+                </label>
                 <select className="w-full h-12 px-4 rounded-md bg-white/5 border border-white/15 text-white focus:outline-none focus:border-gold transition">
                   <option className="bg-forest-deep">Select type</option>
                   <option className="bg-forest-deep">Wholesaler</option>
@@ -580,7 +669,9 @@ function Contact() {
               </div>
               <Field label="Estimated Order Quantity" placeholder="e.g. 500 pairs" />
               <div className="sm:col-span-2">
-                <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">Products Interested In</label>
+                <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">
+                  Products Interested In
+                </label>
                 <div className="flex flex-wrap gap-2">
                   {["5A", "5B", "7A", "2B"].map((p) => (
                     <label key={p} className="cursor-pointer">
@@ -593,7 +684,9 @@ function Contact() {
                 </div>
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">Message</label>
+                <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">
+                  Message
+                </label>
                 <textarea
                   rows={4}
                   placeholder="Tell us about your business and partnership goals..."
@@ -615,7 +708,15 @@ function Contact() {
   );
 }
 
-function Field({ label, placeholder, type = "text" }: { label: string; placeholder: string; type?: string }) {
+function Field({
+  label,
+  placeholder,
+  type = "text",
+}: {
+  label: string;
+  placeholder: string;
+  type?: string;
+}) {
   return (
     <div>
       <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">{label}</label>
@@ -638,13 +739,17 @@ function Footer() {
           <p className="text-white font-black tracking-[0.15em] text-lg">ZENBEATZ</p>
           <p className="text-white/40 text-sm mt-1">Premium African Percussion</p>
         </div>
-        <p className="text-white/40 text-sm">
-          © 2026 Zenbeatz · Lagos, Nigeria · Houston, Texas
-        </p>
+        <p className="text-white/40 text-sm">© 2026 Zenbeatz · Lagos, Nigeria · Houston, Texas</p>
         <div className="flex gap-5 text-sm text-white/60">
-          <a href="#" className="hover:text-gold transition">Instagram</a>
-          <a href="#" className="hover:text-gold transition">YouTube</a>
-          <a href="#" className="hover:text-gold transition">TikTok</a>
+          <a href="#" className="hover:text-gold transition">
+            Instagram
+          </a>
+          <a href="#" className="hover:text-gold transition">
+            YouTube
+          </a>
+          <a href="#" className="hover:text-gold transition">
+            TikTok
+          </a>
         </div>
       </div>
     </footer>
