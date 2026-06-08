@@ -21,7 +21,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Zenbeatz manufactures world-class drumsticks from premium Igala hardwood. Crafted in Nigeria, built for the world. Wholesale & distribution partnerships available.",
+          "Zenbeatz manufactures world-class drumsticks from premium Mangroove hardwood. Crafted in Nigeria, built for the world. Wholesale & distribution partnerships available.",
       },
     ],
   }),
@@ -105,7 +105,7 @@ function Hero() {
         </div>
 
         <p className="mt-8 mx-auto max-w-2xl text-white/60 text-base sm:text-lg leading-relaxed">
-          World-class drumsticks manufactured with premium Igala hardwood. Wholesale &amp;
+          World-class drumsticks manufactured with premium Mangroove hardwood. Wholesale &amp;
           distribution partnerships available worldwide.
         </p>
 
@@ -233,7 +233,7 @@ function Material() {
           <div className="rounded-xl overflow-hidden border border-white/10">
             <img
               src={woodImage}
-              alt="Premium Igala hardwood"
+              alt="Premium Mangroove hardwood"
               width={1200}
               height={1500}
               loading="lazy"
@@ -242,7 +242,7 @@ function Material() {
           </div>
           <div className="absolute top-6 left-6 bg-forest-deep/80 backdrop-blur-md border border-white/10 rounded-lg p-5 max-w-[240px]">
             <p className="text-2xl">🌳</p>
-            <p className="text-white font-bold mt-2">Igala Hardwood</p>
+            <p className="text-white font-bold mt-2">Mangroove Hardwood</p>
             <p className="text-white/55 text-sm mt-1">
               Rare, premium wood sourced sustainably from Nigeria's forests.
             </p>
@@ -252,11 +252,11 @@ function Material() {
         <div className="order-1 lg:order-2">
           <Eyebrow>The Material</Eyebrow>
           <h2 className="text-white text-4xl md:text-6xl font-black tracking-tight leading-[1.05]">
-            The Power of <span className="text-gold">Igala Wood</span>
+            The Power of <span className="text-gold">Mangroove Wood</span>
           </h2>
           <p className="mt-8 text-white/65 text-lg leading-relaxed font-light">
-            At the heart of every Zenbeatz drumstick lies rare, premium Igala hardwood — carefully
-            selected for exceptional performance. Igala wood gives our sticks strength without
+            At the heart of every Zenbeatz drumstick lies rare, premium Mangroove hardwood — carefully
+            selected for exceptional performance. Mangroove wood gives our sticks strength without
             sacrificing feel. The result? A drumstick that sits perfectly in your hand and responds
             with precision every time you strike.
           </p>
@@ -405,7 +405,7 @@ function Products() {
 const WHY = [
   {
     icon: "🌳",
-    t: "Premium Igala Hardwood",
+    t: "Premium Mangroove Hardwood",
     d: "Rare, sustainably sourced wood with exceptional durability and natural balance.",
   },
   {
