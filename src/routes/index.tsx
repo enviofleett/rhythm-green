@@ -618,7 +618,7 @@ function Contact() {
           <div className="lg:col-span-2 space-y-6">
             {[
               { t: "Offices", lines: ["Lagos, Nigeria (Manufacturing)", "Houston, Texas (Sales)"] },
-              { t: "Email", lines: ["info@zenbeatz.com"] },
+              { t: "Email", lines: ["info@zenbeatz.org"] },
               { t: "Phone", lines: ["+234 906 377 0004"] },
             ].map((b) => (
               <div key={b.t} className="rounded-xl border border-white/10 bg-white/[0.03] p-6">
