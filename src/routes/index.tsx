@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import heroImage from "@/assets/hero-drums.jpg";
 import drummerImage from "@/assets/drummer.jpg";
 import woodImage from "@/assets/wood.jpg";
@@ -12,8 +13,17 @@ import teamGideon from "@/assets/team-gideon.jpg";
 import teamDorcas from "@/assets/team-dorcas.jpg";
 import teamPeace from "@/assets/team-peace.jpg";
 import teamAntonia from "@/assets/team-antonia.jpg";
+import { useCartStore } from "@/lib/store";
+import { Cart } from "@/components/Cart";
+import { ShoppingBag, User } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { useLoaderData } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    const { data: products } = await supabase.from('products').select('*').order('code');
+    return { products: products || [] };
+  },
   component: Index,
   head: () => ({
     meta: [
@@ -38,6 +48,25 @@ const NAV_LINKS = [
 ];
 
 function Nav() {
+  const { toggleCart, items } = useCartStore();
+  const cartItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <header className="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-forest-deep/70 border-b border-white/5">
       <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
@@ -53,12 +82,33 @@ function Nav() {
             </li>
           ))}
         </ul>
-        <a
-          href="#contact"
-          className="h-11 inline-flex items-center px-5 text-sm font-bold rounded-md bg-gold text-[#0A0A0A] hover:bg-gold-hover transition shadow-gold"
-        >
-          Partner With Us
-        </a>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={toggleCart}
+            className="relative text-white hover:text-gold transition p-2"
+            aria-label="Open Cart"
+          >
+            <ShoppingBag size={24} />
+            {cartItemCount > 0 && (
+              <span className="absolute top-0 right-0 size-5 bg-gold text-[#0A0A0A] text-[10px] font-bold flex items-center justify-center rounded-full transform translate-x-1/4 -translate-y-1/4">
+                {cartItemCount}
+              </span>
+            )}
+          </button>
+          
+          {session && (
+            <a href="/profile" className="text-white hover:text-gold transition p-2" aria-label="Profile">
+              <User size={24} />
+            </a>
+          )}
+
+          <a
+            href="/partner"
+            className="hidden sm:inline-flex h-11 items-center px-5 text-sm font-bold rounded-md bg-gold text-[#0A0A0A] hover:bg-gold-hover transition shadow-gold"
+          >
+            Partner With Us
+          </a>
+        </div>
       </nav>
     </header>
   );
@@ -289,39 +339,65 @@ function Material() {
 
 /* ─────────────────────────── PRODUCTS ─────────────────────────── */
 
-const PRODUCTS = [
-  {
-    code: "5A",
-    image: stick5A,
-    title: "Versatile & Balanced",
-    desc: "The industry standard. Perfect for all genres and playing styles. Ideal for worship, studio, and live performance.",
-    specs: { Length: '16"', Diameter: '.565"', Weight: "Medium" },
-    popular: true,
-  },
-  {
-    code: "5B",
-    image: stick5B,
-    title: "Powerful & Bold",
-    desc: "Extra thickness for more power and projection. Great for rock, gospel, and high-energy performances.",
-    specs: { Length: '16"', Diameter: '.595"', Weight: "Medium-Heavy" },
-  },
-  {
-    code: "7A",
-    image: stick7A,
-    title: "Light & Fast",
-    desc: "Thinner profile for speed and finesse. Perfect for jazz, acoustic sets, and intricate patterns.",
-    specs: { Length: '15.5"', Diameter: '.540"', Weight: "Light" },
-  },
-  {
-    code: "2B",
-    image: stick2B,
-    title: "Heavy & Commanding",
-    desc: "Maximum weight and reach. Built for power drummers, marching, and stadium-sized sound.",
-    specs: { Length: '16.25"', Diameter: '.630"', Weight: "Heavy" },
-  },
-];
+
 
 function Products() {
+  const { addItem } = useCartStore();
+  const { products } = useLoaderData({ from: '/' });
+  const navigate = useNavigate();
+
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [quantity, setQuantity] = useState(1);
+
+  // Map database fields to the UI structure expected
+  const mappedProducts = products.map((p: any) => ({
+    id: p.id,
+    code: p.code,
+    image: p.image_url || p.image,
+    title: p.title,
+    desc: p.description,
+    price: p.price,
+    specs: p.specs || {},
+    popular: p.is_popular,
+    category: p.category || 'Drumsticks',
+    moq: p.moq || 1
+  }));
+
+  // Group products by category
+  const groupedProducts = mappedProducts.reduce((acc: any, product: any) => {
+    const cat = product.category;
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(product);
+    return acc;
+  }, {});
+
+  const handleAddToCart = () => {
+    if (!selectedProduct) return;
+    addItem({
+      id: selectedProduct.id || selectedProduct.code,
+      name: `Zenbeatz ${selectedProduct.code}`,
+      price: selectedProduct.price || 15.00,
+      quantity: quantity,
+      imageUrl: selectedProduct.image,
+      moq: selectedProduct.moq || 1
+    });
+    setSelectedProduct(null);
+    setQuantity(1);
+  };
+
+  const handleBuyNow = () => {
+    if (!selectedProduct) return;
+    addItem({
+      id: selectedProduct.id || selectedProduct.code,
+      name: `Zenbeatz ${selectedProduct.code}`,
+      price: selectedProduct.price || 15.00,
+      quantity: quantity,
+      imageUrl: selectedProduct.image,
+      moq: selectedProduct.moq || 1
+    });
+    navigate({ to: "/checkout" });
+  };
+
   return (
     <section id="products" className="relative py-32 px-6 lg:px-10">
       <div className="max-w-7xl mx-auto">
@@ -336,57 +412,60 @@ function Products() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-          {PRODUCTS.map((p) => (
-            <article
-              key={p.code}
-              className="group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent hover:border-gold/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-gold"
-            >
-              {p.popular && (
-                <span className="absolute top-5 left-5 z-10 text-[10px] tracking-[0.25em] font-bold uppercase bg-gold text-[#0A0A0A] px-3 py-1.5 rounded">
-                  Most Popular
-                </span>
-              )}
-              <div className="aspect-[5/3] overflow-hidden bg-black">
-                <img
-                  src={p.image}
-                  alt={`Zenbeatz ${p.code}`}
-                  width={900}
-                  height={540}
-                  loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
+        {Object.keys(groupedProducts).length === 0 ? (
+          <div className="text-center py-20 border border-dashed border-white/20 rounded-2xl bg-white/5">
+            <p className="text-white/50 mb-2">No products available yet.</p>
+            <p className="text-gold text-sm font-bold">Add some products in the Admin Dashboard!</p>
+          </div>
+        ) : (
+          Object.entries(groupedProducts).map(([category, catProducts]: [string, any]) => (
+            <div key={category} className="mb-20 last:mb-0">
+              <div className="flex items-center gap-4 mb-8">
+                <h3 className="text-2xl md:text-3xl text-white font-black tracking-widest uppercase">{category}</h3>
+                <div className="flex-1 h-px bg-gradient-to-r from-gold/50 to-transparent"></div>
               </div>
-
-              <div className="p-8">
-                <p className="text-gold text-xs tracking-[0.3em] font-semibold">ZENBEATZ</p>
-                <div className="flex items-baseline justify-between mt-2">
-                  <p className="text-white text-5xl font-black tracking-tight">{p.code}</p>
-                  <h3 className="text-white/90 text-lg font-bold">{p.title}</h3>
-                </div>
-
-                <p className="mt-5 text-white/60 text-sm leading-relaxed">{p.desc}</p>
-
-                <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-white/10 pt-5">
-                  {Object.entries(p.specs).map(([k, v]) => (
-                    <div key={k}>
-                      <dt className="text-white/40 text-[10px] tracking-widest uppercase">{k}</dt>
-                      <dd className="text-white font-bold text-sm mt-1">{v}</dd>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+                {catProducts.map((p: any) => (
+                  <article
+                    key={p.code}
+                    onClick={() => {
+                      setSelectedProduct(p);
+                      setQuantity(p.moq || 1);
+                    }}
+                    className="cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.04] to-transparent hover:border-gold/50 transition-all duration-500 hover:-translate-y-1 hover:shadow-gold"
+                  >
+                    {p.popular && (
+                      <span className="absolute top-5 left-5 z-10 text-[10px] tracking-[0.25em] font-bold uppercase bg-gold text-[#0A0A0A] px-3 py-1.5 rounded">
+                        Most Popular
+                      </span>
+                    )}
+                    <div className="aspect-[5/3] overflow-hidden bg-black">
+                      <img
+                        src={p.image}
+                        alt={`Zenbeatz ${p.code}`}
+                        width={900}
+                        height={540}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
                     </div>
-                  ))}
-                </dl>
 
-                <a
-                  href="#contact"
-                  className="mt-6 inline-flex items-center gap-2 text-gold font-bold text-sm hover:gap-3 transition-all"
-                >
-                  Request Wholesale Quote
-                  <span aria-hidden>→</span>
-                </a>
+                    <div className="p-8">
+                      <p className="text-gold text-xs tracking-[0.3em] font-semibold">ZENBEATZ</p>
+                      <div className="flex items-baseline justify-between mt-2">
+                        <p className="text-white text-5xl font-black tracking-tight">{p.code}</p>
+                        <h3 className="text-white/90 text-lg font-bold">{p.title}</h3>
+                      </div>
+
+                      <p className="mt-5 text-white/60 text-sm leading-relaxed line-clamp-2">{p.desc}</p>
+                      <p className="mt-4 font-bold text-gold">₦{(p.price || 15.00).toLocaleString()}</p>
+                    </div>
+                  </article>
+                ))}
               </div>
-            </article>
-          ))}
-        </div>
+            </div>
+          ))
+        )}
 
         <div className="mt-14 text-center rounded-xl border border-dashed border-gold/30 bg-gold/5 p-8">
           <p className="text-gold text-xs tracking-[0.3em] font-bold uppercase">Coming Soon</p>
@@ -396,6 +475,78 @@ function Products() {
           </p>
         </div>
       </div>
+
+      {/* Product Modal */}
+      {selectedProduct && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
+          <div className="relative bg-forest-deep border border-white/10 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+            {/* Modal Image Header */}
+            <div className="relative h-48 sm:h-64 bg-black shrink-0">
+              <img 
+                src={selectedProduct.image} 
+                className="w-full h-full object-cover" 
+                alt={selectedProduct.title} 
+              />
+              <button 
+                onClick={() => setSelectedProduct(null)}
+                className="absolute top-4 right-4 size-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-black transition backdrop-blur-md border border-white/20"
+              >
+                ✕
+              </button>
+            </div>
+            
+            {/* Modal Body */}
+            <div className="p-6 sm:p-8 overflow-y-auto">
+              <p className="text-gold text-xs tracking-[0.3em] font-bold uppercase">ZENBEATZ {selectedProduct.code}</p>
+              <h3 className="text-2xl sm:text-3xl font-black text-white mt-1 mb-2">{selectedProduct.title}</h3>
+              <p className="text-white/70 text-sm leading-relaxed mb-6">{selectedProduct.desc}</p>
+              
+              {selectedProduct.specs && Object.keys(selectedProduct.specs).length > 0 && (
+                <dl className="grid grid-cols-3 gap-3 border-t border-white/10 pt-5 mb-6">
+                  {Object.entries(selectedProduct.specs).map(([k, v]) => (
+                    <div key={k}>
+                      <dt className="text-white/40 text-[10px] tracking-widest uppercase">{k}</dt>
+                      <dd className="text-white font-bold text-sm mt-1">{String(v)}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+              
+              <div className="flex flex-col sm:flex-row items-center justify-between border-t border-white/10 pt-6 gap-4">
+                <div className="flex items-center bg-white/5 border border-white/10 rounded-lg p-1 w-full sm:w-auto">
+                  <button 
+                    onClick={() => setQuantity(Math.max(selectedProduct.moq || 1, quantity - 1))}
+                    disabled={quantity <= (selectedProduct.moq || 1)}
+                    className="size-10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 rounded-md transition disabled:opacity-30 disabled:cursor-not-allowed"
+                  >
+                    -
+                  </button>
+                  <span className="w-12 text-center text-white font-bold">{quantity}</span>
+                  <button 
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="size-10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 rounded-md transition"
+                  >
+                    +
+                  </button>
+                </div>
+                
+                <button
+                  onClick={handleAddToCart}
+                  className="w-full sm:w-auto flex-1 h-12 flex items-center justify-center gap-2 text-[#0A0A0A] bg-white font-bold text-sm tracking-widest uppercase hover:bg-gray-200 rounded-md transition-all"
+                >
+                  Add to Cart
+                </button>
+                <button
+                  onClick={handleBuyNow}
+                  className="w-full sm:w-auto flex-1 h-12 flex items-center justify-center gap-2 text-[#0A0A0A] bg-gold font-bold text-sm tracking-widest uppercase hover:bg-gold-hover rounded-md transition-all shadow-gold"
+                >
+                  Buy It Now - ₦{((selectedProduct.price || 15.00) * quantity).toLocaleString()}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -597,6 +748,47 @@ function Leadership() {
 /* ─────────────────────────── CONTACT ─────────────────────────── */
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    business_name: "",
+    full_name: "",
+    email: "",
+    phone: "",
+    city: "",
+    reason_for_partnership: "",
+    expected_purchase_quantity: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const { error: dbError } = await supabase
+        .from('partner_applications')
+        .insert({
+          full_name: formData.full_name,
+          business_name: formData.business_name,
+          email: formData.email,
+          phone: formData.phone,
+          city: formData.city,
+          address: "Submitted via Contact Form",
+          reason_for_partnership: formData.reason_for_partnership,
+          expected_purchase_quantity: parseInt(formData.expected_purchase_quantity || "0", 10),
+          status: 'pending'
+        });
+
+      if (dbError) throw dbError;
+      setSubmitted(true);
+    } catch (err: any) {
+      setError(err.message || "Failed to submit inquiry.");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <section id="contact" className="relative py-32 px-6 lg:px-10 bg-forest-deep">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
@@ -643,65 +835,83 @@ function Contact() {
           </div>
 
           {/* Form */}
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className="lg:col-span-3 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.02] p-8 md:p-10 backdrop-blur-md"
-          >
-            <h3 className="text-white text-2xl font-bold">Wholesale Inquiry</h3>
-            <div className="mt-7 grid sm:grid-cols-2 gap-5">
-              <Field label="Company Name *" placeholder="Your company" />
-              <Field label="Contact Name *" placeholder="Your name" />
-              <Field label="Email *" placeholder="you@company.com" type="email" />
-              <Field label="Phone" placeholder="+1 ..." />
-              <Field label="Country *" placeholder="Country" />
-              <div>
-                <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">
-                  Business Type *
-                </label>
-                <select className="w-full h-12 px-4 rounded-md bg-white/5 border border-white/15 text-white focus:outline-none focus:border-gold transition">
-                  <option className="bg-forest-deep">Select type</option>
-                  <option className="bg-forest-deep">Wholesaler</option>
-                  <option className="bg-forest-deep">Retailer</option>
-                  <option className="bg-forest-deep">Distributor</option>
-                  <option className="bg-forest-deep">Music Store</option>
-                  <option className="bg-forest-deep">Other</option>
-                </select>
-              </div>
-              <Field label="Estimated Order Quantity" placeholder="e.g. 500 pairs" />
-              <div className="sm:col-span-2">
-                <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">
-                  Products Interested In
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {["5A", "5B", "7A", "2B"].map((p) => (
-                    <label key={p} className="cursor-pointer">
-                      <input type="checkbox" className="peer sr-only" />
-                      <span className="px-4 py-2 rounded-full border border-white/20 text-white/80 text-sm peer-checked:bg-gold peer-checked:text-[#0A0A0A] peer-checked:border-gold transition">
-                        {p}
-                      </span>
-                    </label>
-                  ))}
+          {submitted ? (
+            <div className="lg:col-span-3 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.02] p-8 md:p-10 backdrop-blur-md flex flex-col items-center justify-center text-center">
+              <div className="size-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mb-6 text-3xl">✓</div>
+              <h3 className="text-white text-3xl font-black mb-4">Inquiry Received</h3>
+              <p className="text-white/70 max-w-md">Thank you for your interest! Our team will review your details and get back to you shortly.</p>
+              <button onClick={() => setSubmitted(false)} className="mt-8 text-gold font-bold hover:text-white transition">Submit another inquiry</button>
+            </div>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="lg:col-span-3 rounded-xl border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.02] p-8 md:p-10 backdrop-blur-md"
+            >
+              <h3 className="text-white text-2xl font-bold">Wholesale Inquiry</h3>
+              {error && <p className="mt-4 text-red-400 text-sm font-bold bg-red-500/10 p-3 rounded">{error}</p>}
+              
+              <div className="mt-7 grid sm:grid-cols-2 gap-5">
+                <Field label="Company Name *" placeholder="Your company" value={formData.business_name} onChange={e => setFormData({...formData, business_name: e.target.value})} required />
+                <Field label="Contact Name *" placeholder="Your name" value={formData.full_name} onChange={e => setFormData({...formData, full_name: e.target.value})} required />
+                <Field label="Email *" placeholder="you@company.com" type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} required />
+                <Field label="Phone" placeholder="+1 ..." value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} />
+                <Field label="Country/City *" placeholder="Your location" value={formData.city} onChange={e => setFormData({...formData, city: e.target.value})} required />
+                
+                <div>
+                  <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">
+                    Business Type *
+                  </label>
+                  <select className="w-full h-12 px-4 rounded-md bg-white/5 border border-white/15 text-white focus:outline-none focus:border-gold transition">
+                    <option className="bg-forest-deep">Select type</option>
+                    <option className="bg-forest-deep">Wholesaler</option>
+                    <option className="bg-forest-deep">Retailer</option>
+                    <option className="bg-forest-deep">Distributor</option>
+                    <option className="bg-forest-deep">Music Store</option>
+                    <option className="bg-forest-deep">Other</option>
+                  </select>
+                </div>
+                
+                <Field label="Estimated Order Quantity" placeholder="e.g. 500 pairs" value={formData.expected_purchase_quantity} onChange={e => setFormData({...formData, expected_purchase_quantity: e.target.value})} />
+                
+                <div className="sm:col-span-2">
+                  <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">
+                    Products Interested In
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {["5A", "5B", "7A", "2B"].map((p) => (
+                      <label key={p} className="cursor-pointer">
+                        <input type="checkbox" className="peer sr-only" />
+                        <span className="px-4 py-2 rounded-full border border-white/20 text-white/80 text-sm peer-checked:bg-gold peer-checked:text-[#0A0A0A] peer-checked:border-gold transition">
+                          {p}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="sm:col-span-2">
+                  <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    rows={4}
+                    placeholder="Tell us about your business and partnership goals..."
+                    className="w-full px-4 py-3 rounded-md bg-white/5 border border-white/15 text-white placeholder:text-white/30 focus:outline-none focus:border-gold transition resize-none"
+                    value={formData.reason_for_partnership}
+                    onChange={e => setFormData({...formData, reason_for_partnership: e.target.value})}
+                  />
                 </div>
               </div>
-              <div className="sm:col-span-2">
-                <label className="block text-white/70 text-xs tracking-widest uppercase mb-2">
-                  Message
-                </label>
-                <textarea
-                  rows={4}
-                  placeholder="Tell us about your business and partnership goals..."
-                  className="w-full px-4 py-3 rounded-md bg-white/5 border border-white/15 text-white placeholder:text-white/30 focus:outline-none focus:border-gold transition resize-none"
-                />
-              </div>
-            </div>
 
-            <button
-              type="submit"
-              className="mt-8 w-full h-14 rounded-md bg-gold text-[#0A0A0A] font-bold tracking-widest text-sm uppercase hover:bg-gold-hover transition shadow-gold"
-            >
-              Submit Wholesale Inquiry
-            </button>
-          </form>
+              <button
+                type="submit"
+                disabled={loading}
+                className="mt-8 w-full h-14 rounded-md bg-gold text-[#0A0A0A] font-bold tracking-widest text-sm uppercase hover:bg-gold-hover transition shadow-gold disabled:opacity-50"
+              >
+                {loading ? "Submitting..." : "Submit Wholesale Inquiry"}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </section>
@@ -712,10 +922,16 @@ function Field({
   label,
   placeholder,
   type = "text",
+  value,
+  onChange,
+  required = false
 }: {
   label: string;
   placeholder: string;
   type?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
 }) {
   return (
     <div>
@@ -723,6 +939,9 @@ function Field({
       <input
         type={type}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        required={required}
         className="w-full h-12 px-4 rounded-md bg-white/5 border border-white/15 text-white placeholder:text-white/30 focus:outline-none focus:border-gold transition"
       />
     </div>
@@ -761,6 +980,7 @@ function Footer() {
 function Index() {
   return (
     <div className="min-h-screen bg-forest-deep text-white selection:bg-gold selection:text-[#0A0A0A]">
+      <Cart />
       <Nav />
       <Hero />
       <About />
