@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet, Link, useNavigate } from "@tanstack/react-router";
-import { Package, Truck, Settings, LayoutDashboard, Building } from "lucide-react";
+import { Package, Truck, Settings, LayoutDashboard, Building, LogOut } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 
@@ -10,6 +10,11 @@ export const Route = createFileRoute("/admin")({
 function AdminLayout() {
   const navigate = useNavigate();
   const [isAuthorized, setIsAuthorized] = useState(false);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/" });
+  };
 
   useEffect(() => {
     async function checkAdmin() {
@@ -65,6 +70,13 @@ function AdminLayout() {
           <Link to="/" className="text-white font-black tracking-[0.15em] text-lg md:text-xl">
             ZENBEATZ <span className="text-gold text-xs">ADMIN</span>
           </Link>
+          <button 
+            onClick={handleLogout}
+            className="flex items-center gap-2 text-white/70 hover:text-white hover:text-gold text-sm tracking-wider uppercase font-bold transition-colors"
+          >
+            <LogOut size={18} />
+            <span className="hidden sm:inline">Logout</span>
+          </button>
         </div>
       </header>
 
