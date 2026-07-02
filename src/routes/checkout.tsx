@@ -11,8 +11,14 @@ export const Route = createFileRoute("/checkout")({
 
 function Checkout() {
   const { items, clearCart, pendingOrderId } = useCartStore();
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  
+  const total = mounted ? items.reduce((sum, item) => sum + item.price * item.quantity, 0) : 0;
   const navigate = useNavigate({ from: "/checkout" });
+  
+  if (!mounted) return null;
   
   const [shippingRates, setShippingRates] = useState<any[]>([]);
   const [selectedCity, setSelectedCity] = useState("");
