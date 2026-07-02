@@ -10,7 +10,8 @@ export const Route = createFileRoute("/checkout")({
 });
 
 function Checkout() {
-  const { items, total, clearCart, pendingOrderId } = useCartStore();
+  const { items, clearCart, pendingOrderId } = useCartStore();
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const navigate = useNavigate({ from: "/checkout" });
   
   const [shippingRates, setShippingRates] = useState<any[]>([]);

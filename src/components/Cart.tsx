@@ -2,7 +2,8 @@ import { useCartStore } from "@/lib/store";
 import { X, Minus, Plus, ShoppingBag } from "lucide-react";
 
 export function Cart() {
-  const { items, isOpen, toggleCart, removeItem, updateQuantity, total } = useCartStore();
+  const { items, isOpen, toggleCart, removeItem, updateQuantity } = useCartStore();
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   if (!isOpen) return null;
 
