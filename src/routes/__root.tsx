@@ -72,37 +72,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
+      { title: "Zenbeatz | Premium African Percussion" },
       {
         name: "description",
         content:
-          "Rhythm & Green is a design system inspired by African percussion, featuring a minimalist aesthetic with deep greens and gold accents.",
+          "Discover Zenbeatz, premium African percussion instruments and drumsticks. Made in Nigeria, designed for drummers worldwide. Quality, balance, and performance.",
       },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
+      { name: "keywords", content: "zenbeatz, drumsticks, african percussion, drums, premium drumsticks, lagos nigeria, drummers, wholesale drumsticks" },
+      { name: "author", content: "Zenbeatz" },
+      { property: "og:title", content: "Zenbeatz | Premium African Percussion" },
       {
         property: "og:description",
         content:
-          "Rhythm & Green is a design system inspired by African percussion, featuring a minimalist aesthetic with deep greens and gold accents.",
+          "Discover Zenbeatz, premium African percussion instruments and drumsticks. Made in Nigeria, designed for drummers worldwide.",
       },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
+      { property: "og:url", content: "https://www.zenbeatz.org" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Zenbeatz | Premium African Percussion" },
       {
         name: "twitter:description",
         content:
-          "Rhythm & Green is a design system inspired by African percussion, featuring a minimalist aesthetic with deep greens and gold accents.",
-      },
-      {
-        property: "og:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9b554667-5272-41d7-9b22-ceaa1a1683f5/id-preview-0a9075d0--18b1e224-8162-458b-bd0c-05850734ab45.lovable.app-1779805990199.png",
-      },
-      {
-        name: "twitter:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/9b554667-5272-41d7-9b22-ceaa1a1683f5/id-preview-0a9075d0--18b1e224-8162-458b-bd0c-05850734ab45.lovable.app-1779805990199.png",
+          "Discover Zenbeatz, premium African percussion instruments and drumsticks. Made in Nigeria, designed for drummers worldwide.",
       },
     ],
     links: [
