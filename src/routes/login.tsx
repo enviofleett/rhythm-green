@@ -32,7 +32,11 @@ function Login() {
           password,
         });
         if (error) throw error;
-        navigate({ to: "/account/orders" });
+        if (email === "toolbuxdev@gmail.com") {
+          navigate({ to: "/admin" });
+        } else {
+          navigate({ to: "/account/orders" });
+        }
       }
     } catch (err: any) {
       alert(err.message || "Authentication failed");
