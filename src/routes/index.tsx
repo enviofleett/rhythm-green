@@ -353,7 +353,7 @@ function Products() {
   const mappedProducts = products.map((p: any) => ({
     id: p.id,
     code: p.code,
-    image: p.image_url || p.image,
+    image: (p.image_url || p.image || "").replace('/src/assets/', '/assets/'),
     title: p.title,
     desc: p.description,
     price: p.price,
