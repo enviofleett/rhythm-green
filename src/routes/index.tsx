@@ -8,7 +8,6 @@ import stick5B from "@/assets/stick-5b.jpg";
 import stick7A from "@/assets/stick-7a.jpg";
 import stick2B from "@/assets/stick-2b.jpg";
 import teamDaniel from "@/assets/team-daniel.jpg";
-import teamSani from "@/assets/team-sani.jpg";
 import teamGideon from "@/assets/team-gideon.jpg";
 import teamDorcas from "@/assets/team-dorcas.jpg";
 import teamPeace from "@/assets/team-peace.jpg";
@@ -641,14 +640,6 @@ const TEAM = [
     tags: ["Lagos, Nigeria", "Houston, Texas", "Professional Drummer"],
     initials: "DP",
     photo: teamDaniel,
-  },
-  {
-    name: "Sani Sule",
-    role: "Marketing Director",
-    bio: "A results-driven marketing leader committed to amplifying the Zenbeatz brand globally through strategic partnerships and bold storytelling.",
-    tags: ["Brand Strategy", "Global Outreach", "Wholesale Growth"],
-    initials: "SS",
-    photo: teamSani,
   },
   {
     name: "Gideon Monday Simon",
